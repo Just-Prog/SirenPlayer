@@ -13,7 +13,7 @@ export default function AppOpeningView() {
   }, []);
   return (
     <SafeAreaView>
-      <View className="flex h-screen w-screen flex-col items-center justify-center gap-y-4">
+      <View className="flex h-full w-screen flex-col items-center justify-center gap-y-4">
         <Text className="text-nowrap font-bold text-xl">Siren Player</Text>
         <Text className="text-nowrap">@Monster Siren</Text>
       </View>
