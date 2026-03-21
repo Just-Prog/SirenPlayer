@@ -1,9 +1,20 @@
+import { Image } from "expo-image";
+import { cssInterop } from "nativewind";
 import type React from "react";
-import { useEffect, useState } from "react";
-import { FlatList, Image, Text, useWindowDimensions, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import {
+  FlatList,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { AlbumsListItemProps } from "@/types/albums";
 import { FetchAlbumsList } from "@/utils/requests/albums";
 import SearchBar from "../common/SearchBar";
+
+cssInterop(Image, { className: "style" });
 
 const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
   artistes,
@@ -13,18 +24,22 @@ const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
 }) => {
   const window = useWindowDimensions();
   return (
-    <View className="flex flex-1 flex-col py-4">
+    <View className="flex flex-1 flex-col items-center justify-start gap-y-4">
       <Image
-        className={"rounded"}
         source={{
           uri: coverUrl,
-          width: window.width / 2.5,
-          height: window.width / 2.5,
+
           headers: {
             referer: "https://monster-siren.hypergryph.com/",
           },
         }}
+        style={{
+          borderRadius: 24,
+          width: window.width / 2 - 32,
+          height: window.width / 2 - 32,
+        }}
       />
+      <Text className="font-bold text-base">{name}</Text>
     </View>
   );
 };
@@ -33,6 +48,9 @@ const AlbumsListView = () => {
   const [search, setSearch] = useState<string>("");
   const [albumsList, setAlbumsList] = useState<AlbumsListItemProps[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const tabBarHeight = 16;
+  const safetyZone = useSafeAreaInsets();
+  const flatlist = useRef(null);
   const fetchList = async () => {
     setRefreshing(true);
     setAlbumsList(await FetchAlbumsList());
@@ -45,25 +63,39 @@ const AlbumsListView = () => {
   }, [search]);
 
   return (
-    <View className="my-8 flex w-full flex-col gap-y-2 px-6">
-      <View>
-        <Text className="mb-4 font-bold text-4xl">专辑</Text>
-      </View>
-      <SearchBar
-        onTextChange={setSearch}
-        placeholder="在Monster Siren Record中搜索..."
-        text={search}
-      />
-      <View className="flex h-full w-full">
-        <FlatList
-          data={albumsList}
-          numColumns={2}
-          refreshing={refreshing}
-          renderItem={({ item, index }) => (
-            <AlbumsListItems key={index} {...item} />
-          )}
+    <View className="my-8 flex h-max-full w-full flex-1 flex-col gap-y-4">
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() =>
+          flatlist.current?.scrollToOffset({ animated: true, y: 0 })
+        }
+      >
+        <View className="px-6">
+          <Text className="font-bold text-4xl">专辑</Text>
+        </View>
+      </TouchableOpacity>
+      <View className="px-6">
+        <SearchBar
+          onTextChange={setSearch}
+          placeholder="在Monster Siren Record中搜索..."
+          text={search}
         />
       </View>
+
+      <FlatList
+        className={"grow-0"}
+        data={albumsList}
+        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+        ListFooterComponent={() => (
+          <View style={{ height: (tabBarHeight + safetyZone.bottom) * 2 }} />
+        )}
+        numColumns={2}
+        ref={flatlist}
+        refreshing={refreshing}
+        renderItem={({ item, index }) => (
+          <AlbumsListItems key={index} {...item} />
+        )}
+      />
     </View>
   );
 };
