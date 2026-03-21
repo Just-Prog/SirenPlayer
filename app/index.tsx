@@ -8,14 +8,14 @@ export default function AppOpeningView() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setTimeout(() => {
-      router.replace("/home");
+      router.replace("/home/main");
     }, 2000);
   }, []);
   return (
     <SafeAreaView>
       <View className="flex h-full w-screen flex-col items-center justify-center gap-y-4">
         <Text className="text-nowrap font-bold text-xl">Siren Player</Text>
-        <Text className="text-nowrap">@Monster Siren</Text>
+        <Text className="text-nowrap">A WORLD FAMILIARLY UNKNOWN</Text>
       </View>
     </SafeAreaView>
   );

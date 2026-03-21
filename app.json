@@ -6,8 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "monstersiren",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "backgroundColor": "#ffffff",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "io.github.justprog.sirenplayerrn"
@@ -40,7 +41,8 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-system-ui"
     ],
     "experiments": {
       "typedRoutes": true,
