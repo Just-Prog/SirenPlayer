@@ -42,7 +42,13 @@
           }
         }
       ],
-      "expo-system-ui"
+      "expo-system-ui",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Geometos.ttf"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

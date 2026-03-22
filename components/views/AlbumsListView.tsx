@@ -1,3 +1,5 @@
+import type { AlbumsListItemProps } from "@/types/albums";
+import { FetchAlbumsList } from "@/utils/requests/albums";
 import { Image } from "expo-image";
 import { cssInterop } from "nativewind";
 import type React from "react";
@@ -10,8 +12,6 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import type { AlbumsListItemProps } from "@/types/albums";
-import { FetchAlbumsList } from "@/utils/requests/albums";
 import SearchBar from "../common/SearchBar";
 
 cssInterop(Image, { className: "style" });

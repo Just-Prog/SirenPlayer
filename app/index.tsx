@@ -1,7 +1,6 @@
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AppOpeningView() {
   const router = useRouter();
@@ -12,11 +11,25 @@ export default function AppOpeningView() {
     }, 2000);
   }, []);
   return (
-    <SafeAreaView>
-      <View className="flex h-full w-screen flex-col items-center justify-center gap-y-4">
-        <Text className="text-nowrap font-bold text-xl">Siren Player</Text>
-        <Text className="text-nowrap">A WORLD FAMILIARLY UNKNOWN</Text>
-      </View>
-    </SafeAreaView>
+    <View className="flex h-full w-screen flex-col items-center justify-center gap-y-2 bg-black/95">
+      <Text
+        className="text-nowrap text-3xl text-white"
+        style={{ fontFamily: "Geometos" }}
+      >
+        Siren Player
+      </Text>
+      <Text
+        className="text-nowrap text-white"
+        style={{ fontFamily: "Geometos" }}
+      >
+        A WORLD FAMILIARLY UNKNOWN
+      </Text>
+      <Text
+        className="pt-8 text-sm text-white"
+        style={{ fontFamily: "Geometos" }}
+      >
+        @Monster_Siren_Records
+      </Text>
+    </View>
   );
 }
