@@ -1,7 +1,7 @@
 import type { AlbumsListItemProps } from "@/types/albums";
 import { FetchAlbumsList } from "@/utils/requests/albums";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
-import { cssInterop } from "nativewind";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -13,8 +13,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SearchBar from "../common/SearchBar";
-
-cssInterop(Image, { className: "style" });
 
 const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
   artistes,
@@ -28,7 +26,6 @@ const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
       <Image
         source={{
           uri: coverUrl,
-
           headers: {
             referer: "https://monster-siren.hypergryph.com/",
           },
@@ -38,8 +35,20 @@ const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
           width: window.width / 2 - 32,
           height: window.width / 2 - 32,
         }}
-      />
-      <Text className="font-bold text-base">{name}</Text>
+      >
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#e0e0e0",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <MaterialIcons color="gray" name={"album"} size={24} />
+        </View>
+      </Image>
+      <Text className="mx-6 line-clamp-2 font-bold text-base">{name}</Text>
     </View>
   );
 };
