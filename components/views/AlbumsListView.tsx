@@ -1,6 +1,5 @@
 import type { AlbumsListItemProps } from "@/types/albums";
 import { FetchAlbumsList } from "@/utils/requests/albums";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -22,33 +21,31 @@ const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
 }) => {
   const window = useWindowDimensions();
   return (
-    <View className="flex flex-1 flex-col items-center justify-start gap-y-4">
-      <Image
-        source={{
-          uri: coverUrl,
-          headers: {
-            referer: "https://monster-siren.hypergryph.com/",
-          },
-        }}
-        style={{
-          borderRadius: 24,
-          width: window.width / 2 - 32,
-          height: window.width / 2 - 32,
+    <View className="flex flex-1 flex-col">
+      <TouchableOpacity
+        activeOpacity={0.85}
+        className="items-center justify-start gap-y-4"
+        onPress={() => {
+          console.log(`"clicked cid ${cid}, name ${name}`);
         }}
       >
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "#e0e0e0",
-            justifyContent: "center",
-            alignItems: "center",
+        <Image
+          source={{
+            uri: coverUrl,
+            headers: {
+              referer: "https://monster-siren.hypergryph.com/",
+            },
           }}
-        >
-          <MaterialIcons color="gray" name={"album"} size={24} />
-        </View>
-      </Image>
-      <Text className="mx-6 line-clamp-2 font-bold text-base">{name}</Text>
+          style={{
+            borderRadius: 24,
+            width: window.width / 2 - 48,
+            height: window.width / 2 - 32,
+          }}
+        />
+        <Text className="mx-6 line-clamp-2 text-center font-bold text-base">
+          {name}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
