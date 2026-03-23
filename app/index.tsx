@@ -7,7 +7,7 @@ export default function AppOpeningView() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setTimeout(() => {
-      router.replace("/home/main");
+      router.replace("/home/albums");
     }, 2000);
   }, []);
   return (

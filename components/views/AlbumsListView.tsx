@@ -1,6 +1,7 @@
 import type { AlbumsListItemProps } from "@/types/albums";
-import { FetchAlbumsList } from "@/utils/requests/albums";
+import { fetchAlbumsList } from "@/utils/requests/albums";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -14,19 +15,20 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SearchBar from "../common/SearchBar";
 
 const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
-  artistes,
   cid,
   coverUrl,
   name,
 }) => {
   const window = useWindowDimensions();
+  const router = useRouter();
   return (
-    <View className="flex flex-1 flex-col">
+    <View className="flex w-[50%] flex-col">
       <TouchableOpacity
         activeOpacity={0.85}
         className="items-center justify-start gap-y-4"
         onPress={() => {
-          console.log(`"clicked cid ${cid}, name ${name}`);
+          console.log(`clicked on cid ${cid}, name ${name}`);
+          router.push(`/home/albums/detail?cid=${cid}`);
         }}
       >
         <Image
@@ -40,9 +42,10 @@ const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
             borderRadius: 24,
             width: window.width / 2 - 48,
             height: window.width / 2 - 32,
+            backgroundColor: "#e0e0e0",
           }}
         />
-        <Text className="mx-6 line-clamp-2 text-center font-bold text-base">
+        <Text className="mx-8 line-clamp-2 text-center font-bold text-base">
           {name}
         </Text>
       </TouchableOpacity>
@@ -54,12 +57,15 @@ const AlbumsListView = () => {
   const [search, setSearch] = useState<string>("");
   const [albumsList, setAlbumsList] = useState<AlbumsListItemProps[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  // const [albumsListBak, setAlbumsListBak] = useState<AlbumsListItemProps[]>([]);
+  // TODO 搜索功能实装
   const tabBarHeight = 16;
   const safetyZone = useSafeAreaInsets();
   const flatlist = useRef(null);
   const fetchList = async () => {
     setRefreshing(true);
-    setAlbumsList(await FetchAlbumsList());
+    const data = await fetchAlbumsList();
+    setAlbumsList(data);
   };
   // biome-ignore lint/correctness/useExhaustiveDependencies: biome经典精神分裂式告警
   useEffect(() => {
@@ -91,7 +97,7 @@ const AlbumsListView = () => {
       <FlatList
         className={"grow-0"}
         data={albumsList}
-        ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 18 }} />}
         ListFooterComponent={() => (
           <View style={{ height: (tabBarHeight + safetyZone.bottom) * 2 }} />
         )}
@@ -107,3 +113,4 @@ const AlbumsListView = () => {
 };
 
 export default AlbumsListView;
+export { AlbumsListItems };

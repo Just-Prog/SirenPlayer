@@ -9,7 +9,7 @@ export default function HomeTabLayout() {
   return isAndroid ? (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
-        name="main"
+        name="albums"
         options={{
           tabBarLabel: "主页",
           tabBarIcon: ({ size, focused }) => (
@@ -50,7 +50,7 @@ export default function HomeTabLayout() {
     </Tabs>
   ) : (
     <NativeTabs>
-      <NativeTabs.Trigger name="main">
+      <NativeTabs.Trigger name="albums">
         <Label>主页</Label>
         <Icon sf={{ default: "house", selected: "house.fill" }} />
       </NativeTabs.Trigger>
