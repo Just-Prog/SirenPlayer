@@ -6,6 +6,7 @@ export interface AlbumsListItemProps {
 }
 
 export interface AlbumsDetailItemProps {
+  artistes?: string[];
   belong: string;
   cid: string;
   coverDeUrl: string;

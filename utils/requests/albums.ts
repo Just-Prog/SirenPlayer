@@ -17,7 +17,11 @@ export const fetchAlbumDetail: (
   arg1: string
 ) => Promise<AlbumsDetailItemProps> = async (cid: string) => {
   const data: AlbumsDetailItemProps = (
-    (await requests.get(`api/album/${cid}/detail`)).data as commonResp
+    (await requests.get(`/api/album/${cid}/detail`)).data as commonResp
   ).data;
+  const extra: AlbumsListItemProps = (
+    (await requests.get(`/api/album/${cid}/data`)).data as commonResp
+  ).data;
+  data.artistes = extra.artistes;
   return data;
 };

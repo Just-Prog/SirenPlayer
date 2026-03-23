@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "expo-router/build/hooks";
 import type React from "react";
 import { useEffect, useState } from "react";
 import {
+  ScrollView,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -66,6 +67,11 @@ const AlbumsDetailListView = () => {
         <Text className="line-clamp-1 text-nowrap font-bold text-4xl">
           {detail?.name ?? "专辑"}
         </Text>
+        <Text className="mt-1 line-clamp-1 text-nowrap font-light text-lg">
+          {detail?.artistes
+            ? detail.artistes.join("、")
+            : "MonsterSirenRecords"}
+        </Text>
       </View>
       <View className="flex-row gap-x-4 px-6">
         <Image
@@ -83,7 +89,9 @@ const AlbumsDetailListView = () => {
           }}
         />
         <View className="flex-1 flex-col gap-y-2">
-          <Text className="pt-3">{detail?.intro}</Text>
+          <ScrollView style={{ width: "100%", height: window.width / 2 - 64 }}>
+            <Text className="pt-3">{detail?.intro}</Text>
+          </ScrollView>
           <MaterialIcons
             className="absolute -top-9 -right-4 -z-10"
             color={"#eee0e0e0"}
