@@ -18,7 +18,7 @@ export default function RootLayout() {
       >
         <Stack.Screen name="home" options={{ headerShown: false }} />
       </Stack>
-      <StatusBar />
+      <StatusBar barStyle={"dark-content"} />
     </SafeAreaProvider>
   );
 }
