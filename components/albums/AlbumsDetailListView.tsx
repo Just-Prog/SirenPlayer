@@ -1,43 +1,31 @@
-import type {
-  AlbumsDetailItemProps,
-  AlbumsListItemProps,
-} from "@/types/albums";
+import type { AlbumsDetailItemProps } from "@/types/albums";
 import { fetchAlbumDetail } from "@/utils/requests/albums";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import { useRouter, useSearchParams } from "expo-router/build/hooks";
-import type React from "react";
 import { useEffect, useState } from "react";
 import {
+  FlatList,
   ScrollView,
   Text,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
-
-const AlbumsDetailListViewItem: React.FC<AlbumsListItemProps> = ({
-  artistes,
-  cid,
-  name,
-}) => {
-  return (
-    <View>
-      <Text>name</Text>
-    </View>
-  );
-};
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const AlbumsDetailListView = () => {
   const params = useSearchParams();
   const router = useRouter();
   const window = useWindowDimensions();
+  const safetyzone = useSafeAreaInsets();
   const [isLoading, setLoading] = useState<boolean>(true);
   const [detail, setDetail] = useState<AlbumsDetailItemProps>();
   const fetchData = async () => {
     setLoading(true);
-    setDetail(await fetchAlbumDetail(params.get("cid") ?? "0"));
+    const data = await fetchAlbumDetail(params.get("cid") ?? "0");
+    setDetail(data);
   };
 
   useEffect(() => {
@@ -47,7 +35,7 @@ const AlbumsDetailListView = () => {
   }, []);
 
   return (
-    <View className="my-8 flex h-max-full w-full flex-1 flex-col gap-y-4">
+    <View className="my-8 flex h-max-full h-screen w-screen flex-1 flex-col gap-y-4">
       <View className="flex w-full flex-row">
         <TouchableOpacity
           className="px-4"
@@ -99,6 +87,27 @@ const AlbumsDetailListView = () => {
             size={window.width / 4}
           />
         </View>
+      </View>
+      <View>
+        <FlatList
+          data={detail?.songs ?? []}
+          ItemSeparatorComponent={() => {
+            return (
+              <View className="my-2 flex w-full flex-1 flex-col items-center justify-center">
+                <View className="w-[90%] flex-1 border border-gray-200/65" />
+              </View>
+            );
+          }}
+          ListFooterComponent={() => (
+            <View style={{ height: (16 + safetyzone.bottom) * 2 }} />
+          )}
+          renderItem={({ item }) => (
+            <View className="my-2 flex-1 flex-row items-center gap-x-2 px-6">
+              <Ionicons name="play" size={16} />
+              <Text className="font-bold">{item?.name ?? "?"}</Text>
+            </View>
+          )}
+        />
       </View>
     </View>
   );
