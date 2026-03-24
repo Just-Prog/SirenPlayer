@@ -6,6 +6,7 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import {
   FlatList,
+  Platform,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -99,7 +100,13 @@ const AlbumsListView = () => {
         data={albumsList}
         ItemSeparatorComponent={() => <View style={{ height: 18 }} />}
         ListFooterComponent={() => (
-          <View style={{ height: (tabBarHeight + safetyZone.bottom) * 2 }} />
+          <View
+            style={{
+              height:
+                (tabBarHeight + safetyZone.bottom) * 2 +
+                (Platform.OS === "ios" ? safetyZone.bottom : 0),
+            }}
+          />
         )}
         numColumns={2}
         ref={flatlist}

@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "expo-router/build/hooks";
 import { useEffect, useState } from "react";
 import {
   FlatList,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -88,8 +89,9 @@ const AlbumsDetailListView = () => {
           />
         </View>
       </View>
-      <View>
+      <View className="flex-1">
         <FlatList
+          className={"grow-0"}
           data={detail?.songs ?? []}
           ItemSeparatorComponent={() => {
             return (
@@ -99,7 +101,13 @@ const AlbumsDetailListView = () => {
             );
           }}
           ListFooterComponent={() => (
-            <View style={{ height: (16 + safetyzone.bottom) * 2 }} />
+            <View
+              style={{
+                height:
+                  (16 + safetyzone.bottom) * 2 +
+                  (Platform.OS === "ios" ? safetyzone.bottom * 2.5 : 0),
+              }}
+            />
           )}
           renderItem={({ item }) => (
             <View className="my-2 flex-1 flex-row items-center gap-x-2 px-6">
