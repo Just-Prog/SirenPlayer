@@ -1,4 +1,4 @@
-import AlbumsDetailListView from "@/components/views/AlbumsDetailListView";
+import AlbumsDetailListView from "@/components/albums/AlbumsDetailListView";
 import { useWindowDimensions, View } from "react-native";
 import {
   SafeAreaView,
