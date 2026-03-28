@@ -1,5 +1,3 @@
-import type { AlbumsDetailItemProps } from "@/types/albums";
-import { fetchAlbumDetail } from "@/utils/requests/albums";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
@@ -15,6 +13,8 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import type { AlbumsDetailItemProps } from "@/types/albums";
+import { fetchAlbumDetail } from "@/utils/requests/albums";
 
 const AlbumsDetailListView = () => {
   const params = useSearchParams();

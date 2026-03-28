@@ -1,9 +1,9 @@
-import AlbumsDetailListView from "@/components/albums/AlbumsDetailListView";
 import { useWindowDimensions, View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import AlbumsDetailListView from "@/components/albums/AlbumsDetailListView";
 
 const HomeAlbumDetailPage = () => {
   const safetyzone = useSafeAreaInsets();

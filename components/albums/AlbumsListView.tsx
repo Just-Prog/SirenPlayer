@@ -1,5 +1,3 @@
-import type { AlbumsListItemProps } from "@/types/albums";
-import { fetchAlbumsList } from "@/utils/requests/albums";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import type React from "react";
@@ -13,6 +11,8 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import type { AlbumsListItemProps } from "@/types/albums";
+import { fetchAlbumsList } from "@/utils/requests/albums";
 import SearchBar from "../common/SearchBar";
 
 const AlbumsListItems: React.FC<AlbumsListItemProps> = ({

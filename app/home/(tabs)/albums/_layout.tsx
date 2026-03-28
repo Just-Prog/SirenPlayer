@@ -1,6 +1,6 @@
-import useTrackPlayer from "@/hooks/useTrackPlayer";
 import { Stack } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import useTrackPlayer from "@/hooks/useTrackPlayer";
 
 export default function HomeAlbumListLayout() {
   const { Player } = useTrackPlayer();
