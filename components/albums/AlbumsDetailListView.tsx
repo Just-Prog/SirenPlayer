@@ -70,6 +70,8 @@ const AlbumsDetailListView = () => {
           style={{
             height: window.width / 2 - 64,
             width: window.width / 2 - 64,
+            marginTop: 12,
+            marginBottom: 12,
             backgroundColor: "#e0e0e0",
             borderRadius: 16,
             shadowColor: "#000000",
@@ -79,10 +81,10 @@ const AlbumsDetailListView = () => {
         />
         <View className="flex-1 flex-col gap-y-2">
           <ScrollView style={{ width: "100%", height: window.width / 2 - 64 }}>
-            <Text className="pt-3">{detail?.intro}</Text>
+            <Text>{detail?.intro}</Text>
           </ScrollView>
           <MaterialIcons
-            className="absolute -top-9 -right-4 -z-10"
+            className="absolute -top-16 -right-4 -z-10"
             color={"#eee0e0e0"}
             name={"format-quote"}
             size={window.width / 4}
