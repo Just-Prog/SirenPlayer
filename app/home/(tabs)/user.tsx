@@ -1,10 +1,12 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeTabUserView() {
   return (
     <SafeAreaView>
-      <Text>testUSERUSER</Text>
+      <View className="w-full h-full w-max-full flex flex-col justify-center items-center">
+        <Text>TODO</Text>
+      </View>
     </SafeAreaView>
   );
 }
