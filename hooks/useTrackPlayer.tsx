@@ -1,5 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Image } from "expo-image";
+import type React from "react";
 import { useEffect, useState } from "react";
 import {
   Pressable,
@@ -14,6 +15,9 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import TrackPlayer from "react-native-track-player";
+
+await TrackPlayer.setupPlayer();
 
 const Player: React.FC<{
   bottomMargin: number;
@@ -57,6 +61,15 @@ const Player: React.FC<{
   const fullScreenAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: fullScreenTranslateY.value }],
   }));
+
+  const PlayerControlButton: React.FC<{
+    onPress?: (arg1: any) => void;
+    iconName: any;
+  }> = ({ onPress, iconName }) => (
+    <Pressable onPress={onPress}>
+      <Ionicons name={iconName} size={window.fontScale * 32} />
+    </Pressable>
+  );
 
   return (
     <>
@@ -109,27 +122,25 @@ const Player: React.FC<{
             </View>
 
             <View className="flex-1 items-center justify-center">
-              <Image
-                source={{
-                  uri: "https://web.hycdn.cn/siren/pic/20250905/2039eb5cf7f7d3a951d5f653c6d33f64.jpg",
-                }}
-                style={{
-                  height: window.width * 0.8,
-                  width: window.width * 0.8,
-                  borderRadius: 16,
-                }}
-              />
+              <View className="overflow-hidden rounded-xl bg-clip-border shadow-black shadow-lg drop-shadow-lg">
+                <Image
+                  source={{
+                    uri: "https://web.hycdn.cn/siren/pic/20250905/2039eb5cf7f7d3a951d5f653c6d33f64.jpg",
+                  }}
+                  style={{
+                    height: window.width * 0.75,
+                    width: window.width * 0.75,
+                  }}
+                />
+              </View>
             </View>
             <View className="mb-12 flex-row gap-x-12">
-              <Pressable>
-                <Ionicons name={"play-back"} size={window.fontScale * 32} />
-              </Pressable>
-              <Pressable>
-                <Ionicons name={"play"} size={window.fontScale * 32} />
-              </Pressable>
-              <Pressable>
-                <Ionicons name={"play-forward"} size={window.fontScale * 32} />
-              </Pressable>
+              <PlayerControlButton iconName={"play-back"} onPress={() => {}} />
+              <PlayerControlButton iconName={"play"} onPress={() => {}} />
+              <PlayerControlButton
+                iconName={"play-forward"}
+                onPress={() => {}}
+              />
             </View>
           </View>
         </View>
