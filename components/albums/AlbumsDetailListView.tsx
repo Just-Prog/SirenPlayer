@@ -1,5 +1,3 @@
-import type { AlbumsDetailItemProps } from "@/types/albums";
-import { fetchAlbumDetail } from "@/utils/requests/albums";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
@@ -15,6 +13,8 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import type { AlbumsDetailItemProps } from "@/types/albums";
+import { fetchAlbumDetail } from "@/utils/requests/albums";
 
 const AlbumsDetailListView = () => {
   const params = useSearchParams();
@@ -107,7 +107,8 @@ const AlbumsDetailListView = () => {
               style={{
                 height:
                   (16 + safetyzone.bottom) * 2 +
-                  (Platform.OS === "ios" ? safetyzone.bottom * 2.5 : 0) + 72,
+                  (Platform.OS === "ios" ? safetyzone.bottom * 2.5 : 0) +
+                  72,
               }}
             />
           )}

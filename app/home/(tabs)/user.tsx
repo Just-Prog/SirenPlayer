@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function HomeTabUserView() {
   return (
     <SafeAreaView>
-      <View className="w-full h-full w-max-full flex flex-col justify-center items-center">
+      <View className="flex h-full w-full w-max-full flex-col items-center justify-center">
         <Text>TODO</Text>
       </View>
     </SafeAreaView>
