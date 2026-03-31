@@ -46,9 +46,13 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Geometos.ttf"]
+          "fonts": [
+            "./assets/fonts/Geometos.ttf"
+          ]
         }
-      ]
+      ],
+      "expo-router",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

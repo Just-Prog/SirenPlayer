@@ -15,9 +15,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import TrackPlayer from "react-native-track-player";
-
-await TrackPlayer.setupPlayer();
 
 const Player: React.FC<{
   bottomMargin: number;
