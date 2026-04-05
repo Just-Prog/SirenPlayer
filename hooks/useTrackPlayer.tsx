@@ -17,12 +17,27 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import usePlayerStore from "@/stores/usePlayerStore";
 
+const PlayerControlButton: React.FC<{
+  onPress?: (arg1: any) => void;
+  iconName: any;
+}> = ({ onPress, iconName }) => {
+  const window = useWindowDimensions();
+  return (
+    <Pressable onPress={onPress}>
+      <Ionicons name={iconName} size={window.fontScale * 32} />
+    </Pressable>
+  );
+};
+
 const Player: React.FC<{
   bottomMargin: number;
 }> = ({ bottomMargin }) => {
   const window = useWindowDimensions();
   const safetyzone = useSafeAreaInsets();
   const [isPlayerPopUp, setPlayerPopUp] = useState(false);
+
+  const playlist = usePlayerStore((state) => state.playlist);
+  const current = usePlayerStore((state) => state.current);
 
   // Mini player 位置（固定在 Tabs 上方）
   const miniPlayerBottom = useSharedValue(bottomMargin);
@@ -59,15 +74,6 @@ const Player: React.FC<{
   const fullScreenAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: fullScreenTranslateY.value }],
   }));
-
-  const PlayerControlButton: React.FC<{
-    onPress?: (arg1: any) => void;
-    iconName: any;
-  }> = ({ onPress, iconName }) => (
-    <Pressable onPress={onPress}>
-      <Ionicons name={iconName} size={window.fontScale * 32} />
-    </Pressable>
-  );
 
   return (
     <>
