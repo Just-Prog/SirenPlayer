@@ -15,6 +15,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import usePlayerStore from "@/stores/usePlayerStore";
 
 const Player: React.FC<{
   bottomMargin: number;
