@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Image } from "expo-image";
 import type React from "react";
 import { useEffect, useState } from "react";
@@ -20,11 +21,17 @@ import usePlayerStore from "@/stores/usePlayerStore";
 const PlayerControlButton: React.FC<{
   onPress?: (arg1: any) => void;
   iconName: any;
-}> = ({ onPress, iconName }) => {
+  family?: string;
+}> = ({ onPress, iconName, family = "ionicons" }) => {
   const window = useWindowDimensions();
   return (
     <Pressable onPress={onPress}>
-      <Ionicons name={iconName} size={window.fontScale * 32} />
+      {family === "ionicons" && (
+        <Ionicons name={iconName} size={window.fontScale * 34} />
+      )}
+      {family === "material" && (
+        <MaterialIcons name={iconName} size={window.fontScale * 32} />
+      )}
     </Pressable>
   );
 };
@@ -148,11 +155,21 @@ const Player: React.FC<{
                 />
               </View>
             </View>
-            <View className="mb-12 flex-row gap-x-12">
+            <View className="mb-12 flex-row items-center justify-between gap-x-10 px-2">
+              <PlayerControlButton
+                family="material"
+                iconName={"loop"}
+                onPress={() => {}}
+              />
               <PlayerControlButton iconName={"play-back"} onPress={() => {}} />
               <PlayerControlButton iconName={"play"} onPress={() => {}} />
               <PlayerControlButton
                 iconName={"play-forward"}
+                onPress={() => {}}
+              />
+              <PlayerControlButton
+                family="material"
+                iconName={"playlist-play"}
                 onPress={() => {}}
               />
             </View>
