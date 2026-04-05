@@ -86,7 +86,9 @@ const Player: React.FC<{
           <View className="flex flex-row items-center gap-x-4 rounded-2xl bg-white px-4 py-3 shadow-lg">
             <Image
               source={{
-                uri: "https://web.hycdn.cn/siren/pic/20250905/2039eb5cf7f7d3a951d5f653c6d33f64.jpg",
+                uri:
+                  playlist?.[current]?.coverUrl ??
+                  "https://p2.music.126.net/P4AH7I3NDtSq4FX07e5Lwg==/109951164481881457.jpg?param=640y640",
               }}
               style={{
                 height: 48,
@@ -94,7 +96,9 @@ const Player: React.FC<{
                 borderRadius: 8,
               }}
             />
-            <Text className="flex-1 font-bold text-lg">美梦必须成真</Text>
+            <Text className="flex-1 font-bold text-lg">
+              {playlist?.[current]?.name ?? "SirenPlayer"}
+            </Text>
           </View>
         </TouchableOpacity>
       </Animated.View>
@@ -121,15 +125,21 @@ const Player: React.FC<{
           <View className="w-full" style={{ height: window.fontScale * 32 }} />
           <View className="w-full flex-1 items-center justify-between px-5 pt-4 pb-10">
             <View className="w-full justify-start">
-              <Text className="mt-4 font-bold text-xl">美梦必须成真</Text>
-              <Text className="font mt-1 text-base">塞壬唱片-MSR</Text>
+              <Text className="mt-4 font-bold text-xl">
+                {playlist?.[current]?.name ?? "SirenPlayer"}
+              </Text>
+              <Text className="font mt-1 text-base">
+                {playlist?.[current]?.artistes?.join("、") ?? "Idle"}
+              </Text>
             </View>
 
             <View className="flex-1 items-center justify-center">
               <View className="overflow-hidden rounded-xl bg-clip-border shadow-black shadow-lg drop-shadow-lg">
                 <Image
                   source={{
-                    uri: "https://web.hycdn.cn/siren/pic/20250905/2039eb5cf7f7d3a951d5f653c6d33f64.jpg",
+                    uri:
+                      playlist?.[current]?.coverUrl ??
+                      "https://p2.music.126.net/P4AH7I3NDtSq4FX07e5Lwg==/109951164481881457.jpg?param=640y640",
                   }}
                   style={{
                     height: window.width * 0.75,

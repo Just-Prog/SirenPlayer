@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import {
   FlatList,
   Platform,
+  Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -13,6 +14,7 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import usePlayerStore from "@/stores/usePlayerStore";
 import type { AlbumsDetailItemProps } from "@/types/albums";
 import { fetchAlbumDetail } from "@/utils/requests/albums";
 
@@ -21,6 +23,7 @@ const AlbumsDetailListView = () => {
   const router = useRouter();
   const window = useWindowDimensions();
   const safetyzone = useSafeAreaInsets();
+  const replacePlaylist = usePlayerStore((state) => state.replacePlaylist);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [detail, setDetail] = useState<AlbumsDetailItemProps>();
   const fetchData = async () => {
@@ -112,11 +115,23 @@ const AlbumsDetailListView = () => {
               }}
             />
           )}
-          renderItem={({ item }) => (
-            <View className="my-2 flex-1 flex-row items-center gap-x-2 px-6">
-              <Ionicons name="play" size={16} />
-              <Text className="font-bold">{item?.name ?? "?"}</Text>
-            </View>
+          renderItem={({ item, index }) => (
+            <Pressable
+              onPress={() =>
+                replacePlaylist(
+                  detail?.songs.map((song) => ({
+                    ...song,
+                    coverUrl: detail?.coverUrl,
+                  })),
+                  index
+                )
+              }
+            >
+              <View className="my-2 flex-1 flex-row items-center gap-x-2 px-6">
+                <Ionicons name="play" size={16} />
+                <Text className="font-bold">{item?.name ?? "?"}</Text>
+              </View>
+            </Pressable>
           )}
         />
       </View>

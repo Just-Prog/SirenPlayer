@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import type { AlbumsDetailItemProps } from "@/types/albums";
+import type { AlbumsListItemProps } from "@/types/albums";
 
 interface PlayerStoreProps {
   current: number;
-  playlist: AlbumsDetailItemProps[];
+  playlist: AlbumsListItemProps[] | undefined;
 }
 
 interface PlayerStoreActionProps {
