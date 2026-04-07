@@ -13,6 +13,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { AlbumsListItemProps } from "@/types/albums";
 import { fetchAlbumsList } from "@/utils/requests/albums";
+import LoadingIcon from "../common/Loading";
 import SearchBar from "../common/SearchBar";
 
 const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
@@ -95,27 +96,40 @@ const AlbumsListView = () => {
         />
       </View>
 
-      <FlatList
-        className={"grow-0"}
-        data={albumsList}
-        ItemSeparatorComponent={() => <View style={{ height: 18 }} />}
-        ListFooterComponent={() => (
-          <View
-            style={{
-              height:
-                (tabBarHeight + safetyZone.bottom) * 2 +
-                (Platform.OS === "ios" ? safetyZone.bottom : 0) +
-                72,
-            }}
-          />
-        )}
-        numColumns={2}
-        ref={flatlist}
-        refreshing={refreshing}
-        renderItem={({ item, index }) => (
-          <AlbumsListItems key={index} {...item} />
-        )}
-      />
+      {refreshing ? (
+        <View
+          style={{
+            marginBottom:
+              (tabBarHeight + safetyZone.bottom) * 2 +
+              (Platform.OS === "ios" ? safetyZone.bottom : 0) +
+              96,
+          }}
+        >
+          <LoadingIcon loading={refreshing} />
+        </View>
+      ) : (
+        <FlatList
+          className={"grow-0"}
+          data={albumsList}
+          ItemSeparatorComponent={() => <View style={{ height: 18 }} />}
+          ListFooterComponent={() => (
+            <View
+              style={{
+                height:
+                  (tabBarHeight + safetyZone.bottom) * 2 +
+                  (Platform.OS === "ios" ? safetyZone.bottom : 0) +
+                  72,
+              }}
+            />
+          )}
+          numColumns={2}
+          ref={flatlist}
+          refreshing={refreshing}
+          renderItem={({ item, index }) => (
+            <AlbumsListItems key={index} {...item} />
+          )}
+        />
+      )}
     </View>
   );
 };
