@@ -17,6 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import usePlayerStore from "@/stores/usePlayerStore";
 import type { AlbumsDetailItemProps } from "@/types/albums";
 import { fetchAlbumDetail } from "@/utils/requests/albums";
+import LoadingIcon from "../common/Loading";
 
 const AlbumsDetailListView = () => {
   const params = useSearchParams();
@@ -95,45 +96,61 @@ const AlbumsDetailListView = () => {
         </View>
       </View>
       <View className="flex-1">
-        <FlatList
-          className={"grow-0"}
-          data={detail?.songs ?? []}
-          ItemSeparatorComponent={() => {
-            return (
-              <View className="my-2 flex w-full flex-1 flex-col items-center justify-center">
-                <View className="w-[90%] flex-1 border border-gray-200/65" />
-              </View>
-            );
-          }}
-          ListFooterComponent={() => (
-            <View
-              style={{
-                height:
-                  (16 + safetyzone.bottom) * 2 +
-                  (Platform.OS === "ios" ? safetyzone.bottom * 2.5 : 0) +
-                  72,
-              }}
-            />
-          )}
-          renderItem={({ item, index }) => (
-            <Pressable
-              onPress={() =>
-                replacePlaylist(
-                  detail?.songs.map((song) => ({
-                    ...song,
-                    coverUrl: detail?.coverUrl,
-                  })),
-                  index
-                )
-              }
-            >
-              <View className="my-2 flex-1 flex-row items-center gap-x-2 px-6">
-                <Ionicons name="play" size={16} />
-                <Text className="font-bold">{item?.name ?? "?"}</Text>
-              </View>
-            </Pressable>
-          )}
-        />
+        {isLoading ? (
+          <View
+            style={{
+              marginBottom:
+                (16 + safetyzone.bottom) * 2 +
+                (Platform.OS === "ios" ? safetyzone.bottom : 0) +
+                96,
+            }}
+          >
+            <LoadingIcon loading={isLoading} />
+          </View>
+        ) : (
+          <FlatList
+            className={""}
+            data={detail?.songs ?? []}
+            ItemSeparatorComponent={() => {
+              return (
+                <View className="my-2 flex w-screen flex-1 flex-col items-center justify-center">
+                  <View
+                    className="flex-1 border border-gray-200/65"
+                    style={{ width: "95%" }}
+                  />
+                </View>
+              );
+            }}
+            ListFooterComponent={() => (
+              <View
+                style={{
+                  height:
+                    (16 + safetyzone.bottom) * 2 +
+                    (Platform.OS === "ios" ? safetyzone.bottom * 2.5 : 0) +
+                    72,
+                }}
+              />
+            )}
+            renderItem={({ item, index }) => (
+              <Pressable
+                onPress={() =>
+                  replacePlaylist(
+                    detail?.songs.map((song) => ({
+                      ...song,
+                      coverUrl: detail?.coverUrl,
+                    })),
+                    index
+                  )
+                }
+              >
+                <View className="my-2 w-full flex-row items-center gap-x-2 px-6">
+                  <Ionicons name="play" size={16} />
+                  <Text className="font-bold">{item.name}</Text>
+                </View>
+              </Pressable>
+            )}
+          />
+        )}
       </View>
     </View>
   );
