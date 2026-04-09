@@ -1,5 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useAudioPlayer } from "expo-audio";
 import { Image } from "expo-image";
 import type React from "react";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import usePlayerStore from "@/stores/usePlayerStore";
+import { fetchSongInfo } from "@/utils/requests/song";
 
 const PlayerControlButton: React.FC<{
   onPress?: (arg1: any) => void;
@@ -45,6 +47,8 @@ const Player: React.FC<{
 
   const playlist = usePlayerStore((state) => state.playlist);
   const current = usePlayerStore((state) => state.current);
+  const [mediaUri, setMediaUri] = useState<string>("");
+  const player = useAudioPlayer();
 
   // Mini player 位置（固定在 Tabs 上方）
   const miniPlayerBottom = useSharedValue(bottomMargin);
@@ -81,6 +85,17 @@ const Player: React.FC<{
   const fullScreenAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: fullScreenTranslateY.value }],
   }));
+
+  const fetchInfo = async () => {
+    const data = await fetchSongInfo(playlist?.[current]?.cid ?? "");
+    setMediaUri(data.sourceUrl ?? "");
+  };
+
+  useEffect(() => {
+    if (playlist && current) {
+      fetchInfo();
+    }
+  }, [playlist, current]);
 
   return (
     <>
@@ -154,6 +169,9 @@ const Player: React.FC<{
                   }}
                 />
               </View>
+            </View>
+            <View className="w-full">
+              <Text>DebugUri: {mediaUri}</Text>
             </View>
             <View className="mb-12 flex-row items-center justify-between gap-x-10 px-2">
               <PlayerControlButton
