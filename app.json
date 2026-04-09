@@ -7,11 +7,13 @@
     "icon": "./assets/images/icon.png",
     "scheme": "monstersiren",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "backgroundColor": "#ffffff",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "io.github.justprog.sirenplayerrn"
+      "bundleIdentifier": "io.github.justprog.sirenplayerrn",
+      "infoPlist": {
+        "UIBackgroundModes": ["audio"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -20,7 +22,6 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "io.github.justprog.sirenplayerrn"
     },
@@ -50,7 +51,25 @@
         }
       ],
       "expo-router",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26,
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "buildArchs": ["arm64-v8a", "x86_64"],
+            "extraMavenRepos": [
+              "https://maven.aliyun.com/repository/google",
+              "https://maven.aliyun.com/repository/jcenter",
+              "https://maven.aliyun.com/repository/central",
+              "https://maven.aliyun.com/repository/public"
+            ]
+          }
+        }
+      ],
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true,
