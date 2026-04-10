@@ -119,9 +119,19 @@ const Player: React.FC<{
                 borderRadius: 8,
               }}
             />
-            <Text className="flex-1 font-bold text-lg">
-              {playlist?.[current]?.name ?? "SirenPlayer"}
-            </Text>
+            <View className="flex flex-1 flex-row items-center justify-between">
+              <Text className="line-clamp-1 flex-1 text-nowrap font-bold text-lg">
+                {playlist?.[current]?.name ?? "SirenPlayer"}
+              </Text>
+              <View className="ml-4 flex-row items-center gap-x-4">
+                <PlayerControlButton iconName={"play"} onPress={() => {}} />
+                <PlayerControlButton
+                  family="material"
+                  iconName={"playlist-play"}
+                  onPress={() => {}}
+                />
+              </View>
+            </View>
           </View>
         </TouchableOpacity>
       </Animated.View>
@@ -148,10 +158,10 @@ const Player: React.FC<{
           <View className="w-full" style={{ height: window.fontScale * 32 }} />
           <View className="w-full flex-1 items-center justify-between px-5 pt-4 pb-10">
             <View className="w-full justify-start">
-              <Text className="mt-4 font-bold text-xl">
+              <Text className="mt-4 line-clamp-1 text-nowrap font-bold text-xl">
                 {playlist?.[current]?.name ?? "SirenPlayer"}
               </Text>
-              <Text className="font mt-1 text-base">
+              <Text className="font mt-1 line-clamp-1 text-nowrap text-base">
                 {playlist?.[current]?.artistes?.join("、") ?? "Idle"}
               </Text>
             </View>
@@ -179,17 +189,28 @@ const Player: React.FC<{
                 family="material"
                 iconName={"loop"}
                 onPress={() => {}}
+                size={32}
               />
-              <PlayerControlButton iconName={"play-back"} onPress={() => {}} />
-              <PlayerControlButton iconName={"play"} onPress={() => {}} />
+              <PlayerControlButton
+                iconName={"play-back"}
+                onPress={() => {}}
+                size={32}
+              />
+              <PlayerControlButton
+                iconName={"play"}
+                onPress={() => {}}
+                size={32}
+              />
               <PlayerControlButton
                 iconName={"play-forward"}
                 onPress={() => {}}
+                size={32}
               />
               <PlayerControlButton
                 family="material"
                 iconName={"playlist-play"}
                 onPress={() => {}}
+                size={32}
               />
             </View>
           </View>
