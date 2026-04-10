@@ -24,15 +24,16 @@ const PlayerControlButton: React.FC<{
   onPress?: (arg1: any) => void;
   iconName: any;
   family?: string;
-}> = ({ onPress, iconName, family = "ionicons" }) => {
+  size?: number;
+}> = ({ onPress, iconName, family = "ionicons", size = 28 }) => {
   const window = useWindowDimensions();
   return (
     <Pressable onPress={onPress}>
       {family === "ionicons" && (
-        <Ionicons name={iconName} size={window.fontScale * 34} />
+        <Ionicons name={iconName} size={window.fontScale * size} />
       )}
       {family === "material" && (
-        <MaterialIcons name={iconName} size={window.fontScale * 32} />
+        <MaterialIcons name={iconName} size={window.fontScale * size * 1.1} />
       )}
     </Pressable>
   );
