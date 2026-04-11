@@ -45,6 +45,7 @@ const Player: React.FC<{
   const window = useWindowDimensions();
   const safetyzone = useSafeAreaInsets();
   const [isPlayerPopUp, setPlayerPopUp] = useState(false);
+  const [isPlaylistPopUp, setPlaylistPopUp] = useState(false);
 
   const playlist = usePlayerStore((state) => state.playlist);
   const current = usePlayerStore((state) => state.current);
@@ -58,6 +59,7 @@ const Player: React.FC<{
   }, [bottomMargin]);
 
   const fullScreenTranslateY = useSharedValue(window.height);
+  const playlistBottom = useSharedValue(window.height);
 
   const handlePlayerBarPress = () => {
     if (isPlayerPopUp) {
@@ -75,6 +77,19 @@ const Player: React.FC<{
     }
   };
 
+  const handlePlayListIconPress = () => {
+    console.log(isPlaylistPopUp);
+    if (isPlaylistPopUp) {
+      playlistBottom.value = withTiming(window.height, { duration: 300 });
+      setPlaylistPopUp(false);
+    } else {
+      playlistBottom.value = withTiming(0, {
+        duration: 300,
+      });
+      setPlaylistPopUp(true);
+    }
+  };
+
   const handleCloseButtonPress = () => {
     handlePlayerBarPress();
   };
@@ -85,6 +100,10 @@ const Player: React.FC<{
 
   const fullScreenAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: fullScreenTranslateY.value }],
+  }));
+
+  const playlistAnimatedStyle = useAnimatedStyle(() => ({
+    top: playlistBottom.value,
   }));
 
   const fetchInfo = async () => {
@@ -101,7 +120,7 @@ const Player: React.FC<{
   return (
     <>
       <Animated.View
-        className="absolute right-0 left-0 z-40 px-4"
+        className="absolute right-0 left-0 z-30 px-4"
         pointerEvents={isPlayerPopUp ? "none" : "auto"}
         style={miniPlayerAnimatedStyle}
       >
@@ -128,7 +147,9 @@ const Player: React.FC<{
                 <PlayerControlButton
                   family="material"
                   iconName={"playlist-play"}
-                  onPress={() => {}}
+                  onPress={() => {
+                    handlePlayListIconPress();
+                  }}
                 />
               </View>
             </View>
@@ -138,7 +159,7 @@ const Player: React.FC<{
 
       {/* 全屏播放器 - 覆盖整个屏幕包括 Tabs */}
       <Animated.View
-        className="absolute inset-0 z-50 flex flex-col bg-white"
+        className="absolute inset-0 z-40 flex flex-col bg-white"
         style={fullScreenAnimatedStyle}
       >
         <View className="w-full" style={{ height: safetyzone.top }} />
@@ -209,10 +230,29 @@ const Player: React.FC<{
               <PlayerControlButton
                 family="material"
                 iconName={"playlist-play"}
-                onPress={() => {}}
+                onPress={() => {
+                  handlePlayListIconPress();
+                }}
                 size={32}
               />
             </View>
+          </View>
+        </View>
+      </Animated.View>
+      <Animated.View
+        className={
+          "absolute z-50 flex h-screen w-full flex-col justify-end bg-gray-500/35"
+        }
+        style={playlistAnimatedStyle}
+      >
+        <TouchableOpacity
+          className="-z-10 h-full w-full"
+          onPress={handlePlayListIconPress}
+        />
+        <View className="h-[60%] rounded-t-xl bg-white bg-clip-border p-8">
+          <Text className="mb-6 font-bold text-xl">播放列表</Text>
+          <View className="flex flex-1">
+            <Text>TODO</Text>
           </View>
         </View>
       </Animated.View>
