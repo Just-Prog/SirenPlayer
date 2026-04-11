@@ -78,7 +78,6 @@ const Player: React.FC<{
   };
 
   const handlePlayListIconPress = () => {
-    console.log(isPlaylistPopUp);
     if (isPlaylistPopUp) {
       playlistBottom.value = withTiming(window.height, { duration: 300 });
       setPlaylistPopUp(false);
@@ -241,15 +240,19 @@ const Player: React.FC<{
       </Animated.View>
       <Animated.View
         className={
-          "absolute z-50 flex h-screen w-full flex-col justify-end bg-gray-500/35"
+          "absolute z-40 flex h-screen w-full flex-col justify-end shadow-2xl shadow-black drop-shadow-xl"
         }
+        pointerEvents="box-none"
         style={playlistAnimatedStyle}
       >
         <TouchableOpacity
-          className="-z-10 h-full w-full"
+          className="absolute inset-0 z-0"
           onPress={handlePlayListIconPress}
         />
-        <View className="h-[60%] rounded-t-xl bg-white bg-clip-border p-8">
+        <View
+          className="h-[60%] rounded-t-xl bg-white bg-clip-border p-8"
+          pointerEvents="auto"
+        >
           <Text className="mb-6 font-bold text-xl">播放列表</Text>
           <View className="flex flex-1">
             <Text>TODO</Text>
