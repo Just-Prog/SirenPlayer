@@ -5,6 +5,7 @@ import { Image } from "expo-image";
 import type React from "react";
 import { useEffect, useState } from "react";
 import {
+  FlatList,
   Pressable,
   Text,
   TouchableOpacity,
@@ -49,6 +50,7 @@ const Player: React.FC<{
 
   const playlist = usePlayerStore((state) => state.playlist);
   const current = usePlayerStore((state) => state.current);
+  const setCurrent = usePlayerStore((state) => state.setCurrent);
   const [mediaUri, setMediaUri] = useState<string>("");
   const player = useAudioPlayer();
 
@@ -255,7 +257,25 @@ const Player: React.FC<{
         >
           <Text className="mb-6 font-bold text-xl">播放列表</Text>
           <View className="flex flex-1">
-            <Text>TODO</Text>
+            <FlatList
+              data={playlist}
+              ItemSeparatorComponent={
+                <View className="w-full border border-gray-300/5" />
+              }
+              renderItem={({ item, index }) => {
+                return (
+                  <TouchableOpacity
+                    className="flex w-full flex-row items-center justify-between py-3"
+                    onPress={() => setCurrent(index)}
+                  >
+                    <Text>{item.name}</Text>
+                    {current === index ? (
+                      <Ionicons name={"play"} size={16} />
+                    ) : null}
+                  </TouchableOpacity>
+                );
+              }}
+            />
           </View>
         </View>
       </Animated.View>
