@@ -133,7 +133,7 @@ const Player: React.FC<{
         pointerEvents={isPlayerPopUp ? "none" : "auto"}
         style={miniPlayerAnimatedStyle}
       >
-        <TouchableOpacity activeOpacity={0.9} onPress={handlePlayerBarPress}>
+        <TouchableOpacity activeOpacity={1} onPress={handlePlayerBarPress}>
           <View className="flex flex-row items-center gap-x-4 rounded-2xl bg-white px-4 py-3 shadow-lg">
             <Image
               source={{
