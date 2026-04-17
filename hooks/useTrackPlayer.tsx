@@ -53,6 +53,7 @@ const Player: React.FC<{
   const setCurrent = usePlayerStore((state) => state.setCurrent);
   const [mediaUri, setMediaUri] = useState<string>("");
   const player = useAudioPlayer();
+  const [paused, setPause] = useState<boolean>(false);
 
   // Mini player 位置（固定在 Tabs 上方）
   const miniPlayerBottom = useSharedValue(bottomMargin);
@@ -117,6 +118,13 @@ const Player: React.FC<{
       fetchInfo();
     }
   }, [playlist, current]);
+
+  // 启动的时候 zustand 传过来的 list 和 current 没变化，手动指定拿一次数据
+  useEffect(() => {
+    if (playlist && current) {
+      fetchInfo();
+    }
+  }, []);
 
   return (
     <>
