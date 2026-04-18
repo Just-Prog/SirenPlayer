@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -58,8 +58,6 @@ const AlbumsListView = () => {
   const [search, setSearch] = useState<string>("");
   const [albumsList, setAlbumsList] = useState<AlbumsListItemProps[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  // const [albumsListBak, setAlbumsListBak] = useState<AlbumsListItemProps[]>([]);
-  // TODO 搜索功能实装
   const tabBarHeight = 16;
   const safetyZone = useSafeAreaInsets();
   const flatlist = useRef(null);
@@ -73,7 +71,14 @@ const AlbumsListView = () => {
     fetchList().then(() => {
       setRefreshing(false);
     });
-  }, [search]);
+  }, []);
+
+  const filteredAlbumsList = useMemo(() => {
+    if (search === "") {
+      return albumsList;
+    }
+    return albumsList.filter((v, i) => v.name.includes(search));
+  }, [search, albumsList]);
 
   return (
     <View className="my-8 flex h-max-full w-full flex-1 flex-col gap-y-4">
@@ -109,7 +114,7 @@ const AlbumsListView = () => {
       ) : (
         <FlatList
           className={"grow-0"}
-          data={albumsList}
+          data={filteredAlbumsList}
           ItemSeparatorComponent={() => <View style={{ height: 18 }} />}
           ListEmptyComponent={() => (
             <View className="flex h-full w-full flex-1 items-center justify-center">
