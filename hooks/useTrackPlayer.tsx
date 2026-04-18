@@ -119,12 +119,20 @@ const Player: React.FC<{
     }
   }, [playlist, current]);
 
-  // 启动的时候 zustand 传过来的 list 和 current 没变化，手动指定拿一次数据
-  useEffect(() => {
-    if (playlist && current) {
-      fetchInfo();
+  const toogleSong = (action: "back" | "forward") => {
+    let res: number = current;
+    if (action === "back") {
+      res--;
+    } else {
+      res++;
     }
-  }, []);
+    if (res < 0) {
+      res = playlist?.length ?? 1;
+    } else if (res > (playlist?.length ?? 1) - 1) {
+      res = 0;
+    }
+    setCurrent(res);
+  };
 
   return (
     <>
@@ -211,9 +219,6 @@ const Player: React.FC<{
                 />
               </View>
             </View>
-            <View className="w-full">
-              <Text>DebugUri: {mediaUri}</Text>
-            </View>
             <View className="mb-12 flex-row items-center justify-between gap-x-10 px-2">
               <PlayerControlButton
                 family="material"
@@ -223,17 +228,23 @@ const Player: React.FC<{
               />
               <PlayerControlButton
                 iconName={"play-back"}
-                onPress={() => {}}
+                onPress={() => {
+                  toogleSong("back");
+                }}
                 size={32}
               />
               <PlayerControlButton
-                iconName={"play"}
-                onPress={() => {}}
+                iconName={paused ? "pause" : "play"}
+                onPress={() => {
+                  setPause(!paused);
+                }}
                 size={32}
               />
               <PlayerControlButton
                 iconName={"play-forward"}
-                onPress={() => {}}
+                onPress={() => {
+                  toogleSong("forward");
+                }}
                 size={32}
               />
               <PlayerControlButton

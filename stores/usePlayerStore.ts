@@ -21,8 +21,10 @@ const usePlayerStore = create<PlayerStoreCombinedProps>()(
     (set) => ({
       current: 0,
       playlist: [],
-      setCurrent: (arg1) => set(() => ({ current: arg1 })),
-      setPlaylist: (arg1) => set(() => ({ playlist: arg1 })),
+      setCurrent: (arg1) =>
+        set((state) => ({ current: arg1, playlist: state.playlist })),
+      setPlaylist: (arg1) =>
+        set((state) => ({ playlist: arg1, current: state.current })),
       replacePlaylist: (arg1, arg2) =>
         set(() => ({ current: arg2, playlist: arg1 })),
     }),

@@ -29,7 +29,6 @@ const AlbumsListItems: React.FC<AlbumsListItemProps> = ({
         activeOpacity={0.85}
         className="items-center justify-start gap-y-4"
         onPress={() => {
-          console.log(`clicked on cid ${cid}, name ${name}`);
           router.push(`/home/albums/detail?cid=${cid}`);
         }}
       >
