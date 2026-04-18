@@ -127,6 +127,11 @@ const AlbumsDetailListView = () => {
                     </View>
                   );
                 }}
+                ListEmptyComponent={() => (
+                  <View className="flex h-full w-full flex-1 items-center justify-center">
+                    <Text>啥也木有</Text>
+                  </View>
+                )}
                 ListFooterComponent={() => (
                   <View
                     style={{

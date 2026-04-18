@@ -260,30 +260,37 @@ const Player: React.FC<{
           onPress={handlePlayListIconPress}
         />
         <View
-          className="h-[60%] rounded-t-xl bg-white bg-clip-border p-8"
+          className="h-[60%] rounded-t-xl bg-white bg-clip-border py-8"
           pointerEvents="auto"
         >
-          <Text className="mb-6 font-bold text-xl">播放列表</Text>
-          <View className="flex flex-1">
-            <FlatList
-              data={playlist}
-              ItemSeparatorComponent={
-                <View className="w-full border border-gray-300/5" />
-              }
-              renderItem={({ item, index }) => {
-                return (
-                  <TouchableOpacity
-                    className="flex w-full flex-row items-center justify-between py-3"
-                    onPress={() => setCurrent(index)}
-                  >
-                    <Text>{item.name}</Text>
-                    {current === index ? (
-                      <Ionicons name={"play"} size={16} />
-                    ) : null}
-                  </TouchableOpacity>
-                );
-              }}
-            />
+          <Text className="mb-6 px-8 font-bold text-xl">播放列表</Text>
+          <View className="flex flex-1 bg-gray-100/25">
+            <View className="flex flex-1 px-8">
+              <FlatList
+                data={playlist}
+                ItemSeparatorComponent={() => (
+                  <View className="w-full border border-gray-300/5" />
+                )}
+                ListEmptyComponent={() => (
+                  <View className="flex h-full min-h-full w-full flex-1 items-center justify-center">
+                    <Text>没有歌曲</Text>
+                  </View>
+                )}
+                renderItem={({ item, index }) => {
+                  return (
+                    <TouchableOpacity
+                      className="flex w-full flex-row items-center justify-between py-3"
+                      onPress={() => setCurrent(index)}
+                    >
+                      <Text>{item.name}</Text>
+                      {current === index ? (
+                        <Ionicons name={"play"} size={16} />
+                      ) : null}
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </View>
           </View>
         </View>
       </Animated.View>
